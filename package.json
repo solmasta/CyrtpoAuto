@@ -1,26 +1,7 @@
 {
   "name": "cryptoauto",
   "version": "1.0.0",
-  "description": "AI-powered crypto trading bot for Cloudflare Workers",
-  "main": "src/index.js",
-  "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler publish",
-    "deploy:prod": "wrangler publish --env production",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "crypto",
-    "trading",
-    "cloudflare",
-    "workers",
-    "ai"
-  ],
-  "author": "",
-  "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "wrangler": "^3.28.0"
+    "build": "echo 'No build step needed'"
   }
 }
