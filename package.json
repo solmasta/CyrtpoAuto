@@ -1,7 +1,26 @@
 {
   "name": "cryptoauto",
   "version": "1.0.0",
+  "private": true,
+  "main": "functions/index.js",
   "scripts": {
-    "build": "echo 'No build step needed'"
+    "build": "echo 'No build required for Cloudflare Functions' && exit 0",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "axios": "^1.6.2",
+    "ws": "^8.14.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240101.0",
+    "wrangler": "^4.111.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
