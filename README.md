@@ -1,6 +1,6 @@
 # CryptoAuto - AI-Powered Crypto Trading
 
-Passive income from automated crypto trading powered by AI.
+Passive income from automated crypto trading powered by AI. 
 
 ## 🚀 Quick Start
 
