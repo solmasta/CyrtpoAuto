@@ -75,6 +75,12 @@ function getHTML(pathname) {
     .price-card .btn { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #10b981; color: white; }
     .price-card .btn:hover { background: #059669; }
     
+    .footer { background: #1a2332; border-top: 1px solid rgba(16, 185, 129, 0.1); padding: 40px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 14px; margin-top: 60px; }
+    .footer-links { margin-bottom: 20px; }
+    .footer-links a { color: #10b981; text-decoration: none; margin: 0 15px; }
+    .footer-links a:hover { text-decoration: underline; }
+    .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; margin-top: 20px; }
+    
     .login-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
     .login-modal.active { display: flex; }
     .modal-card { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 50px; width: 100%; max-width: 420px; }
@@ -90,7 +96,7 @@ function getHTML(pathname) {
     .dashboard-container.active { display: flex; }
     
     .dash-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
-    .dash-logo { font-size: 20px; font-weight: 700; }
+    .dash-logo { font-size: 20px; font-weight: 700; cursor: pointer; }
     .dash-user { display: flex; align-items: center; gap: 15px; }
     .logout-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
     
@@ -152,9 +158,9 @@ function getHTML(pathname) {
     <nav class="navbar">
       <div class="navbar-brand" onclick="goHome()">CryptoAuto</div>
       <div class="navbar-links">
-        <a onclick="showPage('landing')">Home</a>
-        <a onclick="showPage('pricing')">Pricing</a>
-        <button class="btn-secondary" onclick="showLogin()">Login</button>
+        <a onclick="showPage('landing'); return false;">Home</a>
+        <a onclick="showPage('pricing'); return false;">Pricing</a>
+        <button class="btn-secondary" onclick="showLogin(); return false;">Login</button>
       </div>
     </nav>
 
@@ -163,7 +169,7 @@ function getHTML(pathname) {
         <div class="hero">
           <h1>Your Savings Earn 0%. Let AI Make You 2 to 5 percent Monthly.</h1>
           <p>Passive income from automated crypto trading powered by AI.</p>
-          <button class="btn-large" onclick="goToSignup()">Start Free Trial</button>
+          <button class="btn-large" onclick="goToSignup(); return false;">Start Free Trial</button>
         </div>
         <div class="features">
           <h2>Why CryptoAuto?</h2>
@@ -213,15 +219,38 @@ function getHTML(pathname) {
           </div>
         </div>
       </div>
+      <div class="footer">
+        <div class="footer-links">
+          <a href="#" onclick="alert('Help center coming soon'); return false;">Help</a>
+          <a href="#" onclick="alert('Contact: support@cryptoauto.com'); return false;">Contact Support</a>
+          <a href="#" onclick="alert('Coming soon'); return false;">Terms</a>
+          <a href="#" onclick="alert('Coming soon'); return false;">Privacy</a>
+        </div>
+        <div class="footer-bottom">
+          <p>Copyright 2026 CryptoAuto. All rights reserved. | support@cryptoauto.com | 1-800-CRYPTO-1</p>
+        </div>
+      </div>
     </div>
 
     <div class="page" id="pricing">
       <div class="pricing-page">
         <h1>Simple, Transparent Pricing</h1>
         <div class="pricing-grid">
-          <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="goToSignup()">Get Started</button></div>
-          <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="goToSignup()">Subscribe</button></div>
-          <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="goToSignup()">Contact Sales</button></div>
+          <div class="price-card"><h3>Free</h3><div class="price">0 dollars</div><div class="price-desc">7-day trial</div><ul><li>1 exchange connection</li><li>Basic grid bot</li><li>Email support</li><li>Manual trades only</li></ul><button class="btn" onclick="goToSignup(); return false;">Get Started</button></div>
+          <div class="price-card featured"><h3>Pro</h3><div class="price">29 dollars</div><div class="price-desc">per month</div><ul><li>4 exchange connections</li><li>Advanced grid bots</li><li>24/7 AI automation</li><li>Priority support</li><li>Performance analytics</li></ul><button class="btn" onclick="goToSignup(); return false;">Subscribe</button></div>
+          <div class="price-card"><h3>Enterprise</h3><div class="price">299 dollars</div><div class="price-desc">per month</div><ul><li>Unlimited exchanges</li><li>Custom bot strategies</li><li>Dedicated account manager</li><li>API access</li><li>White-label option</li></ul><button class="btn" onclick="goToSignup(); return false;">Contact Sales</button></div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-links">
+          <a href="#" onclick="showPage('landing'); return false;">Home</a>
+          <a href="#" onclick="alert('Help center coming soon'); return false;">Help</a>
+          <a href="#" onclick="alert('Contact: support@cryptoauto.com'); return false;">Contact Support</a>
+          <a href="#" onclick="alert('Coming soon'); return false;">Terms</a>
+          <a href="#" onclick="alert('Coming soon'); return false;">Privacy</a>
+        </div>
+        <div class="footer-bottom">
+          <p>Copyright 2026 CryptoAuto. All rights reserved. | support@cryptoauto.com | 1-800-CRYPTO-1</p>
         </div>
       </div>
     </div>
@@ -243,9 +272,9 @@ function getHTML(pathname) {
             <label>Confirm Password</label>
             <input type="password" id="signupPasswordConfirm" placeholder="Confirm password">
           </div>
-          <button class="btn-submit" onclick="doSignup()">Create Account</button>
+          <button class="btn-submit" onclick="doSignup(); return false;">Create Account</button>
           <p style="text-align: center; margin-top: 15px; font-size: 14px; color: rgba(255, 255, 255, 0.6);">
-            Already have account? <a href="#" onclick="showLogin()" style="color: #10b981; text-decoration: none;">Login</a>
+            Already have account? <a href="#" onclick="showLogin(); return false;" style="color: #10b981; text-decoration: none;">Login</a>
           </p>
         </div>
       </div>
@@ -254,60 +283,26 @@ function getHTML(pathname) {
 
   <div class="dashboard-container" id="dashContainer">
     <div class="dash-header">
-      <div class="dash-logo" onclick="goHome()">CryptoAuto Dashboard</div>
+      <div class="dash-logo" onclick="goHome(); return false;">CryptoAuto Dashboard</div>
       <div class="dash-user">
         <span id="userEmail"></span>
-        <button class="logout-btn" onclick="doLogout()">Logout</button>
+        <button class="logout-btn" onclick="doLogout(); return false;">Logout</button>
       </div>
     </div>
     
     <div class="dash-layout">
       <div class="dash-sidebar">
-        <div class="sidebar-item active" onclick="switchSection('portfolio')">Portfolio</div>
-        <div class="sidebar-item" onclick="switchSection('bots')">Trading Bots</div>
-        <div class="sidebar-item" onclick="switchSection('exchanges')">Exchanges</div>
-        <div class="sidebar-item" onclick="switchSection('profile')">Profile</div>
-        <div class="sidebar-item" onclick="switchSection('account')">Account</div>
-        <div class="sidebar-item" onclick="switchSection('billing')">Billing</div>
-        <div id="adminLink" class="sidebar-item" onclick="switchSection('admin')" style="display:none; color: #f59e0b; border-left-color: #f59e0b;">Admin Panel</div>
+        <div class="sidebar-item active" onclick="switchSection('portfolio'); return false;">Portfolio</div>
+        <div class="sidebar-item" onclick="switchSection('bots'); return false;">Trading Bots</div>
+        <div class="sidebar-item" onclick="switchSection('exchanges'); return false;">Exchanges</div>
+        <div class="sidebar-item" onclick="switchSection('profile'); return false;">Profile</div>
+        <div class="sidebar-item" onclick="switchSection('account'); return false;">Account</div>
+        <div class="sidebar-item" onclick="switchSection('billing'); return false;">Billing</div>
+        <div id="adminLink" class="sidebar-item" onclick="switchSection('admin'); return false;" style="display:none; color: #f59e0b; border-left-color: #f59e0b;">Admin Panel</div>
       </div>
 
       <div class="dash-content">
         <div class="section show" id="portfolio">
           <h2>Portfolio</h2>
           <div class="stats-grid">
-            <div class="stat-card"><div class="stat-value">12,450 dollars</div><div class="stat-label">Total Balance</div></div>
-            <div class="stat-card"><div class="stat-value">3,250 dollars</div><div class="stat-label">Profit (this month)</div></div>
-            <div class="stat-card"><div class="stat-value">65 percent</div><div class="stat-label">Win Rate</div></div>
-            <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Active Bots</div></div>
-          </div>
-          <div class="card">
-            <h3>Recent Trades</h3>
-            <table class="table">
-              <tr><th>Bot</th><th>Pair</th><th>Type</th><th>Profit</th><th>Time</th></tr>
-              <tr><td>Bot 1</td><td>BTC/USDT</td><td>Buy</td><td>+250 dollars</td><td>2 hours ago</td></tr>
-              <tr><td>Bot 2</td><td>ETH/USDT</td><td>Sell</td><td>+185 dollars</td><td>4 hours ago</td></tr>
-              <tr><td>Bot 3</td><td>XRP/USDT</td><td>Buy</td><td>+120 dollars</td><td>6 hours ago</td></tr>
-            </table>
-          </div>
-        </div>
-
-        <div class="section" id="bots">
-          <h2>Trading Bots</h2>
-          <button class="btn-submit" style="width: auto; margin-bottom: 20px;" onclick="alert('Create bot coming soon')">Create New Bot</button>
-          <div class="card">
-            <h3>Bot 1 - BTC Grid</h3>
-            <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.7);">Status: Active | Exchange: Binance | Pair: BTC/USDT</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-              <div><strong>Grid Range:</strong> 40,000 - 50,000 USDT</div>
-              <div><strong>Grid Levels:</strong> 10</div>
-              <div><strong>Current Profit:</strong> 1,250 dollars</div>
-              <div><strong>Win Rate:</strong> 68%</div>
-            </div>
-            <button class="btn-submit" style="width: auto; margin-top: 15px;" onclick="alert('Coming soon')">Edit</button>
-          </div>
-        </div>
-
-        <div class="section" id="exchanges">
-          <h2>Exchange Connections</h2>
-          
+            <div class="stat-card"><div class="stat-value">12,45
