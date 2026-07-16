@@ -1,5 +1,5 @@
 /**
- * CryptoAuto - Cache Busting Version
+ * CryptoAuto - Completely Rewritten Admin Dashboard
  */
 
 import Stripe from 'stripe';
@@ -12,15 +12,13 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <title>CryptoAuto Admin - v2</title>
+  <title>CryptoAuto Admin</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: white; overflow: hidden; }
+    html, body { width: 100%; height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: white; overflow: hidden; }
+    
     .login-page { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
-    .login-page.hidden { display: none; }
+    .login-page.hidden { display: none !important; }
     .login-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 30px 20px; width: 100%; max-width: 380px; }
     .login-card h1 { margin-bottom: 25px; font-size: 28px; text-align: center; }
     .form-group { margin-bottom: 15px; }
@@ -28,31 +26,50 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     .form-group input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-size: 16px; }
     .btn-login { width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
     .error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; }
+    
     .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; }
-    .dashboard.active { display: flex; }
+    .dashboard.active { display: flex !important; }
+    
     .app-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 15px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .app-header .logo { font-size: 20px; font-weight: 700; }
-    .logout-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; font-weight: 600; }
-    .logout-btn:active { background: #dc2626; }
+    
+    .logout-btn { background: #ef4444 !important; color: white !important; border: none !important; padding: 10px 20px !important; border-radius: 6px !important; font-size: 14px !important; cursor: pointer !important; font-weight: 600 !important; }
+    .logout-btn:active { background: #dc2626 !important; }
+    
     .content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; }
-    .section { display: none; }
-    .section.active { display: block; }
-    .section h2 { font-size: 20px; margin-bottom: 20px; }
+    
+    .portfolio-section { display: none; }
+    .trades-section { display: none; }
+    .settings-section { display: none; }
+    .users-section { display: none; }
+    
+    .portfolio-section.show { display: block; }
+    .trades-section.show { display: block; }
+    .settings-section.show { display: block; }
+    .users-section.show { display: block; }
+    
+    h2 { font-size: 20px; margin-bottom: 20px; }
+    
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .stat-card { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 15px; text-align: center; }
     .stat-card .value { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
     .stat-card .label { font-size: 12px; color: rgba(255, 255, 255, 0.6); }
+    
     .card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px; margin-bottom: 15px; }
     .card h3 { margin-bottom: 15px; font-size: 16px; font-weight: 600; }
     .card input { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 14px; }
     .card input::placeholder { color: rgba(255, 255, 255, 0.5); }
-    .btn-save { background: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; width: 100%; }
+    
+    .btn-save { background: #10b981 !important; color: white !important; padding: 12px 24px !important; border: none !important; border-radius: 6px !important; cursor: pointer !important; font-weight: 600 !important; font-size: 14px !important; width: 100% !important; }
+    .btn-save:active { background: #059669 !important; }
+    
     .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(16, 185, 129, 0.4); }
     .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; border: 1px solid rgba(239, 68, 68, 0.4); }
+    
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-around; height: 70px; }
-    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; cursor: pointer; color: rgba(255, 255, 255, 0.6); font-size: 11px; }
-    .nav-item.active { color: #10b981; }
-    .nav-item .icon { font-size: 24px; margin-bottom: 2px; }
+    .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px; cursor: pointer; color: rgba(255, 255, 255, 0.6); font-size: 11px; border: none; background: none; }
+    .nav-btn.active { color: #10b981; }
+    .nav-btn .icon { font-size: 24px; margin-bottom: 2px; }
   </style>
 </head>
 <body>
@@ -71,13 +88,15 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
     <button class="btn-login" onclick="doLogin()">Login</button>
   </div>
 </div>
+
 <div class="dashboard" id="dashboard">
   <div class="app-header">
     <div class="logo">🚀 CryptoAuto</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
+  
   <div class="content">
-    <div class="section active" id="portfolio">
+    <div class="portfolio-section show">
       <h2>📊 Portfolio</h2>
       <div class="stat-grid">
         <div class="stat-card"><div class="value">\$12,450</div><div class="label">Total</div></div>
@@ -86,11 +105,13 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
         <div class="stat-card"><div class="value">24</div><div class="label">Active</div></div>
       </div>
     </div>
-    <div class="section" id="trades">
+
+    <div class="trades-section">
       <h2>💹 Trades</h2>
-      <div class="card"><p>Trade history</p></div>
+      <div class="card"><p>Trade history coming soon</p></div>
     </div>
-    <div class="section" id="settings">
+
+    <div class="settings-section">
       <h2>⚙️ Settings</h2>
       <div class="card">
         <h3>🔐 Change Password</h3>
@@ -101,19 +122,49 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
         <button class="btn-save" onclick="changePassword()">Update Password</button>
       </div>
     </div>
-    <div class="section" id="users">
+
+    <div class="users-section">
       <h2>👥 Users</h2>
       <div class="card"><p>User management coming soon</p></div>
     </div>
   </div>
+
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('portfolio')"><div class="icon">📊</div><div>Portfolio</div></div>
-    <div class="nav-item" onclick="switchTab('trades')"><div class="icon">💹</div><div>Trades</div></div>
-    <div class="nav-item" onclick="switchTab('settings')"><div class="icon">⚙️</div><div>Settings</div></div>
-    <div class="nav-item" onclick="switchTab('users')"><div class="icon">👥</div><div>Users</div></div>
+    <button class="nav-btn active" onclick="showTab('portfolio')"><div class="icon">📊</div><div>Portfolio</div></button>
+    <button class="nav-btn" onclick="showTab('trades')"><div class="icon">💹</div><div>Trades</div></button>
+    <button class="nav-btn" onclick="showTab('settings')"><div class="icon">⚙️</div><div>Settings</div></button>
+    <button class="nav-btn" onclick="showTab('users')"><div class="icon">👥</div><div>Users</div></button>
   </div>
 </div>
+
 <script>
+  function showTab(tab) {
+    // Hide all sections
+    document.querySelectorAll('.portfolio-section, .trades-section, .settings-section, .users-section').forEach(el => {
+      el.classList.remove('show');
+    });
+    
+    // Remove active from all buttons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // Show the selected section
+    if (tab === 'portfolio') {
+      document.querySelector('.portfolio-section').classList.add('show');
+      document.querySelectorAll('.nav-btn')[0].classList.add('active');
+    } else if (tab === 'trades') {
+      document.querySelector('.trades-section').classList.add('show');
+      document.querySelectorAll('.nav-btn')[1].classList.add('active');
+    } else if (tab === 'settings') {
+      document.querySelector('.settings-section').classList.add('show');
+      document.querySelectorAll('.nav-btn')[2].classList.add('active');
+    } else if (tab === 'users') {
+      document.querySelector('.users-section').classList.add('show');
+      document.querySelectorAll('.nav-btn')[3].classList.add('active');
+    }
+  }
+
   async function doLogin() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
@@ -159,24 +210,19 @@ const ADMIN_DASHBOARD_HTML = `<!DOCTYPE html>
       });
       const data = await res.json();
       if (data.success) {
-        document.getElementById('passwordMessage').innerHTML = '<div class="success">✓ Password changed successfully!</div>';
-        document.getElementById('currentPassword').value = '';
-        document.getElementById('newPassword').value = '';
-        document.getElementById('confirmPassword').value = '';
+        document.getElementById('passwordMessage').innerHTML = '<div class="success">✓ Password changed!</div>';
+        setTimeout(() => {
+          document.getElementById('currentPassword').value = '';
+          document.getElementById('newPassword').value = '';
+          document.getElementById('confirmPassword').value = '';
+          document.getElementById('passwordMessage').innerHTML = '';
+        }, 2000);
       } else {
         document.getElementById('passwordMessage').innerHTML = '<div class="error-msg">' + (data.error || 'Failed') + '</div>';
       }
     } catch (err) {
       document.getElementById('passwordMessage').innerHTML = '<div class="error-msg">Error: ' + err.message + '</div>';
     }
-  }
-
-  function switchTab(tabName) {
-    console.log('Switching to:', tabName);
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-    event.target.closest('.nav-item').classList.add('active');
   }
 
   function doLogout() {
@@ -218,7 +264,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     .price { font-size: 32px; font-weight: 700; margin-bottom: 5px; }
     .btn { display: block; width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px; margin: 15px 0; }
     .features { list-style: none; text-align: left; font-size: 13px; }
-    .features li { padding: 8px 0; color: rgba(255,255,255,0.8); }
+    .features li { padding: 8px 0; }
     .features li:before { content: "✓ "; color: #10b981; margin-right: 8px; }
   </style>
 </head>
@@ -273,9 +319,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
       try {
         const res = await fetch('/checkout?plan=' + plan);
         const data = await res.json();
-        if (data.url) {
-          window.location.href = data.url;
-        }
+        if (data.url) window.location.href = data.url;
       } catch (err) {
         alert('Checkout failed');
       }
@@ -336,7 +380,6 @@ export default {
     try {
       const url = new URL(request.url);
       const pathname = url.pathname;
-
       const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -349,13 +392,9 @@ export default {
       if (pathname === '/api/auth/login' && request.method === 'POST') {
         try {
           const { email, password } = await request.json();
-          if (email !== 'admin@example.com') {
-            return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 401 });
-          }
+          if (email !== 'admin@example.com') return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 401 });
           const passwordMatch = await bcrypt.compare(password, env.ADMIN_PASSWORD_HASH);
-          if (!passwordMatch) {
-            return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 401 });
-          }
+          if (!passwordMatch) return new Response(JSON.stringify({ error: 'Invalid email or password' }), { status: 401 });
           const token = jwt.sign({ email }, env.JWT_SECRET, { expiresIn: '7d' });
           return new Response(JSON.stringify({ token }), { status: 200, headers: { 'Content-Type': 'application/json', ...corsHeaders } });
         } catch (error) {
@@ -366,39 +405,10 @@ export default {
       if (pathname === '/api/auth/change-password' && request.method === 'POST') {
         try {
           const authHeader = request.headers.get('Authorization');
-          if (!authHeader) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-          }
+          if (!authHeader) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
           const token = authHeader.replace('Bearer ', '');
           jwt.verify(token, env.JWT_SECRET);
           const { currentPassword } = await request.json();
           const passwordMatch = await bcrypt.compare(currentPassword, env.ADMIN_PASSWORD_HASH);
-          if (!passwordMatch) {
-            return new Response(JSON.stringify({ error: 'Current password is incorrect' }), { status: 401 });
-          }
-          return new Response(JSON.stringify({ success: true }), { status: 200 });
-        } catch (error) {
-          return new Response(JSON.stringify({ error: 'Password change failed' }), { status: 500 });
-        }
-      }
-
-      if (pathname === '/' && request.method === 'GET') {
-        return new Response(getLandingPage(), { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders } });
-      }
-
-      if (pathname === '/pricing' && request.method === 'GET') {
-        return new Response(PRICING_PAGE_HTML, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders } });
-      }
-
-      if (pathname === '/trial' && request.method === 'GET') {
-        return new Response(TRIAL_SIGNUP_HTML, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8', ...corsHeaders } });
-      }
-
-      if (pathname === '/checkout' && request.method === 'GET') {
-        const plan = url.searchParams.get('plan');
-        try {
-          const stripe = new Stripe(env.STRIPE_SECRET_KEY);
-          const priceIds = { pro: env.STRIPE_PRO_PRICE_ID, enterprise: env.STRIPE_ENTERPRISE_PRICE_ID };
-          const priceId = priceIds[plan];
-          if (!priceId) {
-            return new Response(JSON.stringify({ erro
+          if (!passwordMatch) return new Response(JSON.stringify({ error: 'Current password is incorrect' }), { status: 401 });
+          return new Respons
