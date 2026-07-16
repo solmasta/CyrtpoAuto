@@ -2,10 +2,5 @@ name = "cryptoauto"
 main = "functions/index.js"
 compatibility_date = "2024-12-16"
 compatibility_flags = ["nodejs_compat"]
-
 account_id = "8777cec3892d8e47eff9a6b1ee0becc1"
 workers_dev = true
-
-[env.production]
-name = "cryptoauto-production"
-vars = { ENVIRONMENT = "production" }
