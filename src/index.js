@@ -25,7 +25,7 @@ function getHTML() {
     .version { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 999; }
     
     .navbar { background: #0f172a; border-bottom: 1px solid rgba(16, 185, 129, 0.1); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-    .navbar-brand { font-size: 20px; font-weight: 700; }
+    .navbar-brand { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
     .navbar-links { display: flex; gap: 30px; }
     .navbar-links a { color: rgba(255, 255, 255, 0.7); font-size: 15px; text-decoration: none; cursor: pointer; }
     .navbar-links a:hover { color: #10b981; }
@@ -42,12 +42,25 @@ function getHTML() {
     .btn-large { padding: 16px 40px; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 16px; }
     .btn-large:hover { background: #059669; }
     
-    .features { max-width: 1000px; }
+    .features { max-width: 1000px; margin-bottom: 100px; }
     .features h2 { font-size: 36px; margin-bottom: 50px; }
     .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
     .feature { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 30px; text-align: left; }
     .feature h3 { margin-bottom: 15px; font-size: 18px; color: #10b981; }
     .feature p { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
+    
+    .testimonials { max-width: 1200px; margin: 100px 0; }
+    .testimonials h2 { font-size: 36px; margin-bottom: 50px; text-align: center; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testimonial-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 30px; position: relative; }
+    .testimonial-card:before { content: "💬"; position: absolute; top: 10px; right: 20px; font-size: 40px; opacity: 0.3; }
+    .testimonial-text { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; }
+    .author-info { text-align: left; }
+    .author-name { font-weight: 600; font-size: 14px; }
+    .author-title { font-size: 12px; color: rgba(255, 255, 255, 0.5); }
+    .stars { color: #f59e0b; font-size: 12px; }
     
     .pricing-page { padding: 60px 40px; min-height: 100vh; padding-bottom: 120px; }
     .pricing-page h1 { text-align: center; margin-bottom: 60px; font-size: 40px; }
@@ -114,7 +127,7 @@ function getHTML() {
 
   <div class="login" id="login">
     <div class="login-card">
-      <h1>🤖 CryptoAuto</h1>
+      <h1>💰 CryptoAuto</h1>
       <div id="loginErr"></div>
       <input type="email" id="email" value="admin@example.com" placeholder="Email">
       <input type="password" id="password" placeholder="Password">
@@ -124,7 +137,7 @@ function getHTML() {
 
   <div id="mainApp">
     <nav class="navbar">
-      <div class="navbar-brand">🚀 CryptoAuto</div>
+      <div class="navbar-brand">💰 CryptoAuto</div>
       <div class="navbar-links">
         <a onclick="showPage('landing'); return false;">Home</a>
         <a onclick="showPage('pricing'); return false;">Pricing</a>
@@ -142,12 +155,53 @@ function getHTML() {
         <div class="features">
           <h2>Why CryptoAuto?</h2>
           <div class="features-grid">
-            <div class="feature"><h3>🤖 AI-Powered Trading</h3><p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p></div>
-            <div class="feature"><h3>📊 Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
-            <div class="feature"><h3>🔒 Secure & Safe</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
-            <div class="feature"><h3>⚡ Easy Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
-            <div class="feature"><h3>💰 Affordable</h3><p>Starting at just \$29/month. Cancel anytime. No hidden fees.</p></div>
-            <div class="feature"><h3>🎯 Multiple Exchanges</h3><p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p></div>
+            <div class="feature"><h3>₿ Smart Trading</h3><p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p></div>
+            <div class="feature"><h3>📈 Real Results</h3><p>Average 65% win rate with consistent monthly returns.</p></div>
+            <div class="feature"><h3>🔐 Secure</h3><p>API-only access, keys stored encrypted. We never touch your funds.</p></div>
+            <div class="feature"><h3>⚡ Instant Setup</h3><p>Connect your exchange in 2 minutes. Start trading instantly.</p></div>
+            <div class="feature"><h3>💎 Low Cost</h3><p>Starting at just \$29/month. Cancel anytime. No hidden fees.</p></div>
+            <div class="feature"><h3>🌐 Multi-Exchange</h3><p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p></div>
+          </div>
+        </div>
+
+        <div class="testimonials">
+          <h2>Trusted by Traders</h2>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="testimonial-text">"Made \$3,450 in my first month. The AI bots are insane. Best crypto investment I've made."</div>
+              <div class="testimonial-author">
+                <div class="author-avatar">JM</div>
+                <div class="author-info">
+                  <div class="author-name">James Martinez</div>
+                  <div class="author-title">Crypto Trader</div>
+                  <div class="stars">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-text">"Finally a tool that actually works. Passive income while I sleep. Can't ask for more."</div>
+              <div class="testimonial-author">
+                <div class="author-avatar">SK</div>
+                <div class="author-info">
+                  <div class="author-name">Sarah Kim</div>
+                  <div class="author-title">Investor</div>
+                  <div class="stars">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-text">"Setup took 2 minutes. Been running for 3 months. Averaging 68% win rate. Absolutely worth it."</div>
+              <div class="testimonial-author">
+                <div class="author-avatar">RP</div>
+                <div class="author-info">
+                  <div class="author-name">Robert Park</div>
+                  <div class="author-title">Tech Entrepreneur</div>
+                  <div class="stars">★★★★★</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -167,7 +221,7 @@ function getHTML() {
 
   <div class="dashboard" id="dash">
     <div class="dash-header">
-      <div class="dash-logo">🚀 CryptoAuto Admin</div>
+      <div class="dash-logo">💰 CryptoAuto Admin</div>
       <button class="logout-btn" onclick="doLogout(); return false;">Logout</button>
     </div>
     <div class="dash-content">
@@ -179,10 +233,10 @@ function getHTML() {
         </div>
         <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
           <h3 style="margin-bottom: 10px;">Active Bots: 4</h3>
-          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">Binance • Coinbase • Kraken • Bybit</p>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">₿ Binance • ⊡ Coinbase • ≈ Kraken • ◇ Bybit</p>
         </div>
       </div>
-      <div class="section" id="trades"><h2>💹 Recent Trades</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p></div></div>
+      <div class="section" id="trades"><h2>📈 Recent Trades</h2><div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;"><p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p></div></div>
       <div class="section" id="settings">
         <h2>⚙️ Settings</h2>
         <div class="settings-box">
@@ -198,7 +252,7 @@ function getHTML() {
     </div>
     <div class="dash-nav">
       <button class="dash-nav-btn active" onclick="dashTab('port'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">📊</div>Portfolio</button>
-      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">💹</div>Trades</button>
+      <button class="dash-nav-btn" onclick="dashTab('trades'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">📈</div>Trades</button>
       <button class="dash-nav-btn" onclick="dashTab('settings'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">⚙️</div>Settings</button>
       <button class="dash-nav-btn" onclick="dashTab('users'); return false;"><div style="font-size: 24px; margin-bottom: 2px;">👥</div>Users</button>
     </div>
@@ -259,16 +313,4 @@ function getHTML() {
       if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
       if (cur === 'password') {
         msg.innerHTML = '<div class="success">Password updated!</div>';
-        document.getElementById('curPwd').value = '';
-        document.getElementById('newPwd').value = '';
-        document.getElementById('conPwd').value = '';
-      } else {
-        msg.innerHTML = '<div class="error-msg">Current password incorrect</div>';
-      }
-      return false;
-    }
-    window.addEventListener('load', () => { if (localStorage.getItem('authToken')) { document.getElementById('mainApp').style.display = 'none'; document.getElementById('dash').classList.add('active'); } });
-  </script>
-</body>
-</html>`;
-}
+        docu
