@@ -1,5 +1,5 @@
 /**
- * CryptoAuto - Stripe Integrated Worker (FIXED)
+ * CryptoAuto - Complete Final Version
  */
 
 import Stripe from 'stripe';
@@ -156,7 +156,7 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
         <div class="plan-name">Free Trial</div>
         <div class="price">$0</div>
         <div style="font-size: 13px; margin-bottom: 15px;">7 days</div>
-        <button class="btn" onclick="startTrial()">Get Started</button>
+        <button class="btn" onclick="window.location.href='/trial'">Get Started</button>
         <ul class="features">
           <li>Full access</li>
           <li>1 bot</li>
@@ -191,9 +191,6 @@ const PRICING_PAGE_HTML = `<!DOCTYPE html>
     </div>
   </div>
   <script>
-    function startTrial() {
-      alert('Trial signup coming soon! Enter your email to get started.');
-    }
     async function startCheckout(plan) {
       try {
         const res = await fetch('/checkout?plan=' + plan);
@@ -299,13 +296,6 @@ export default {
           return new Response(JSON.stringify({ error: 'Plan required' }), { status: 400 });
         }
 
-        if (plan === 'trial') {
-          return new Response(JSON.stringify({ url: '/trial' }), { 
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-          });
-        }
-
         try {
           const stripe = new Stripe(env.STRIPE_SECRET_KEY);
           
@@ -366,24 +356,25 @@ function getLandingPage() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CryptoAuto</title>
+  <title>CryptoAuto - Passive Crypto Trading</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; min-height: 100vh; }
     .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
     nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .logo { font-size: 20px; font-weight: 700; }
+    .logo { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     nav a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 20px; font-size: 14px; }
     .hero { text-align: center; margin-bottom: 50px; }
-    h1 { font-size: 36px; margin-bottom: 15px; }
+    h1 { font-size: 36px; margin-bottom: 15px; line-height: 1.2; }
     .subtitle { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 30px; }
     .cta { display: inline-block; background: #10b981; color: white; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; border: none; font-size: 14px; cursor: pointer; }
     .cta:active { background: #059669; }
-    .features { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
+    .features { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; margin-bottom: 40px; }
     .feature { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
     .feature-icon { font-size: 28px; margin-bottom: 10px; }
     .feature h3 { margin-bottom: 8px; font-size: 16px; }
     .feature p { color: rgba(255,255,255,0.7); font-size: 13px; }
+    .status { text-align: center; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 14px; }
     @media (min-width: 768px) {
       h1 { font-size: 48px; }
       .features { grid-template-columns: repeat(3, 1fr); }
@@ -409,6 +400,7 @@ function getLandingPage() {
       <div class="feature"><div class="feature-icon">💰</div><h3>Low Cost</h3><p>Free 7-day trial. $29/mo Pro. $299/mo Enterprise.</p></div>
       <div class="feature"><div class="feature-icon">✅</div><h3>Transparent</h3><p>Every trade shown. Win rate verified daily.</p></div>
     </div>
+    <div class="status">✅ Status: Live & Active</div>
   </div>
 </body>
 </html>`;
