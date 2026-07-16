@@ -188,17 +188,12 @@ function getHTML(pathname) {
       </div>
     </nav>
     <div class="ticker">
-      <div class="ticker-track">
-        <span class="ticker-item"><span class="sym">BTC/USDT</span> 67,234.50 <span class="up">+2.14%</span></span>
-        <span class="ticker-item"><span class="sym">ETH/USDT</span> 3,412.80 <span class="up">+1.42%</span></span>
-        <span class="ticker-item"><span class="sym">XRP/USDT</span> 2.31 <span class="down">-0.38%</span></span>
-        <span class="ticker-item"><span class="sym">SOL/USDT</span> 198.60 <span class="up">+3.05%</span></span>
-        <span class="ticker-item"><span class="sym">BNB/USDT</span> 712.40 <span class="down">-0.62%</span></span>
-        <span class="ticker-item"><span class="sym">BTC/USDT</span> 67,234.50 <span class="up">+2.14%</span></span>
-        <span class="ticker-item"><span class="sym">ETH/USDT</span> 3,412.80 <span class="up">+1.42%</span></span>
-        <span class="ticker-item"><span class="sym">XRP/USDT</span> 2.31 <span class="down">-0.38%</span></span>
-        <span class="ticker-item"><span class="sym">SOL/USDT</span> 198.60 <span class="up">+3.05%</span></span>
-        <span class="ticker-item"><span class="sym">BNB/USDT</span> 712.40 <span class="down">-0.62%</span></span>
+      <div class="ticker-track" id="tickerTrack">
+        <span class="ticker-item"><span class="sym">BTC/USDT</span> Loading... </span>
+        <span class="ticker-item"><span class="sym">ETH/USDT</span> Loading... </span>
+        <span class="ticker-item"><span class="sym">XRP/USDT</span> Loading... </span>
+        <span class="ticker-item"><span class="sym">SOL/USDT</span> Loading... </span>
+        <span class="ticker-item"><span class="sym">BNB/USDT</span> Loading... </span>
       </div>
     </div>
 
@@ -657,7 +652,39 @@ function getHTML(pathname) {
       alert('Profile saved!');
     }
 
+    async function fetchLiveTicker() {
+      const coins = [
+        { id: 'bitcoin', sym: 'BTC/USDT' },
+        { id: 'ethereum', sym: 'ETH/USDT' },
+        { id: 'ripple', sym: 'XRP/USDT' },
+        { id: 'solana', sym: 'SOL/USDT' },
+        { id: 'binancecoin', sym: 'BNB/USDT' }
+      ];
+      const ids = coins.map(c => c.id).join(',');
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true');
+        const data = await res.json();
+        const items = coins.map(c => {
+          const d = data[c.id];
+          if (!d) return '';
+          const price = d.usd >= 1 ? d.usd.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : d.usd.toFixed(4);
+          const change = d.usd_24h_change || 0;
+          const dir = change >= 0 ? 'up' : 'down';
+          const sign = change >= 0 ? '+' : '';
+          return '<span class="ticker-item"><span class="sym">' + c.sym + '</span> ' + price + ' <span class="' + dir + '">' + sign + change.toFixed(2) + '%</span></span>';
+        }).join('');
+        const track = document.getElementById('tickerTrack');
+        if (track && items) {
+          track.innerHTML = items + items;
+        }
+      } catch (e) {
+        console.log('Ticker fetch failed, keeping last known values');
+      }
+    }
+
     window.addEventListener('load', () => {
+      fetchLiveTicker();
+      setInterval(fetchLiveTicker, 60000);
       if (localStorage.getItem('authToken')) {
         const email = localStorage.getItem('userEmail');
         document.getElementById('mainApp').style.display = 'none';
