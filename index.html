@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CryptoAuto - AI-Powered Crypto Trading</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: white; }
+    
+    .version { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; z-index: 999; }
+    
+    .navbar { background: #0f172a; border-bottom: 1px solid rgba(16, 185, 129, 0.1); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .navbar-brand { font-size: 20px; font-weight: 700; }
+    .navbar-links { display: flex; gap: 30px; }
+    .navbar-links a { color: rgba(255, 255, 255, 0.7); font-size: 15px; text-decoration: none; cursor: pointer; }
+    .navbar-links a:hover { color: #10b981; }
+    .navbar-links a.admin { color: #10b981; }
+    
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    .landing { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%); }
+    
+    .hero { max-width: 900px; margin-bottom: 80px; }
+    .hero h1 { font-size: 56px; line-height: 1.2; margin-bottom: 30px; font-weight: 700; }
+    .hero p { font-size: 18px; color: rgba(255, 255, 255, 0.6); margin-bottom: 40px; line-height: 1.6; }
+    
+    .btn-large { padding: 16px 40px; background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 16px; }
+    .btn-large:hover { background: #059669; }
+    
+    .features { max-width: 1000px; }
+    .features h2 { font-size: 36px; margin-bottom: 50px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .feature { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 30px; text-align: left; }
+    .feature h3 { margin-bottom: 15px; font-size: 18px; color: #10b981; }
+    .feature p { font-size: 14px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
+    
+    .pricing-page { padding: 60px 40px; min-height: 100vh; }
+    .pricing-page h1 { text-align: center; margin-bottom: 60px; font-size: 40px; }
+    
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
+    .price-card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 40px 30px; text-align: center; }
+    .price-card.featured { border: 2px solid #10b981; }
+    .price-card h3 { font-size: 24px; margin-bottom: 15px; }
+    .price { font-size: 40px; font-weight: 700; color: #10b981; margin: 20px 0; }
+    .price-desc { font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 30px; }
+    .price-card ul { list-style: none; margin: 30px 0; text-align: left; }
+    .price-card li { padding: 10px 0; font-size: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .price-card li:before { content: "✓ "; color: #10b981; font-weight: 600; margin-right: 8px; }
+    .price-card .btn { width: 100%; padding: 12px; margin-top: 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #10b981; color: white; }
+    .price-card .btn:hover { background: #059669; }
+    
+    .login { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); align-items: center; justify-content: center; z-index: 1000; }
+    .login.active { display: flex; }
+    
+    .login-card { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 50px; width: 100%; max-width: 420px; }
+    .login-card h1 { text-align: center; margin-bottom: 35px; font-size: 32px; }
+    .login-card input { width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; margin-bottom: 15px; font-size: 16px; }
+    .login-card input::placeholder { color: rgba(255, 255, 255, 0.5); }
+    .login-card .btn { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .login-card .btn:hover { background: #059669; }
+    .error { background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    
+    .dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; flex-direction: column; z-index: 999; }
+    .dashboard.active { display: flex; }
+    
+    .dash-header { background: #1e293b; border-bottom: 1px solid rgba(16, 185, 129, 0.2); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .dash-logo { font-size: 20px; font-weight: 700; }
+    .logout-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .logout-btn:hover { background: #dc2626; }
+    
+    .dash-content { flex: 1; overflow-y: auto; padding: 30px; padding-bottom: 90px; }
+    .section { display: none; }
+    .section.show { display: block; }
+    .section h2 { margin-bottom: 25px; font-size: 28px; }
+    
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 25px; text-align: center; }
+    .stat-value { font-size: 32px; font-weight: 700; color: #10b981; }
+    .stat-label { font-size: 13px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; }
+    
+    .settings-box { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 30px; margin-top: 20px; }
+    .settings-box h3 { margin-bottom: 20px; font-size: 18px; }
+    .input-pwd { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 6px; color: white; margin-bottom: 12px; font-size: 16px; }
+    .btn-save { width: 100%; background: #10b981; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .btn-save:hover { background: #059669; }
+    
+    .success { background: rgba(16, 185, 129, 0.2); color: #86efac; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    .error-msg { background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+    
+    .dash-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; border-top: 1px solid rgba(16, 185, 129, 0.2); display: flex; height: 70px; z-index: 100; }
+    .dash-nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: rgba(255, 255, 255, 0.6); cursor: pointer; font-size: 11px; }
+    .dash-nav-btn.active { color: #10b981; }
+    
+    @media (max-width: 768px) {
+      .navbar { padding: 15px 20px; }
+      .navbar-links { gap: 15px; }
+      .hero h1 { font-size: 36px; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="version">v3.0</div>
+
+  <!-- Login Modal -->
+  <div class="login" id="login">
+    <div class="login-card">
+      <h1>🤖 CryptoAuto</h1>
+      <div id="loginErr"></div>
+      <input type="email" id="email" value="admin@example.com" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button class="btn" onclick="doLogin()">Login</button>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="mainApp">
+    <nav class="navbar">
+      <div class="navbar-brand">🚀 CryptoAuto</div>
+      <div class="navbar-links">
+        <a onclick="showPage('landing')">Home</a>
+        <a onclick="showPage('pricing')">Pricing</a>
+        <a class="admin" onclick="showLogin()">Admin</a>
+      </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <div class="page active" id="landing">
+      <div class="landing">
+        <div class="hero">
+          <h1>Your Savings Earn 0%. Let AI Make You 2–5% Monthly.</h1>
+          <p>Passive income from automated crypto trading powered by AI.</p>
+          <button class="btn-large" onclick="showPage('pricing')">Start Free Trial</button>
+        </div>
+
+        <div class="features">
+          <h2>Why CryptoAuto?</h2>
+          <div class="features-grid">
+            <div class="feature">
+              <h3>🤖 AI-Powered Trading</h3>
+              <p>Intelligent algorithms optimize your trades 24/7 across 4 major exchanges.</p>
+            </div>
+            <div class="feature">
+              <h3>📊 Real Results</h3>
+              <p>Average 65% win rate with consistent monthly returns.</p>
+            </div>
+            <div class="feature">
+              <h3>🔒 Secure & Safe</h3>
+              <p>API-only access, keys stored encrypted. We never touch your funds.</p>
+            </div>
+            <div class="feature">
+              <h3>⚡ Easy Setup</h3>
+              <p>Connect your exchange in 2 minutes. Start trading instantly.</p>
+            </div>
+            <div class="feature">
+              <h3>💰 Affordable</h3>
+              <p>Starting at just $29/month. Cancel anytime. No hidden fees.</p>
+            </div>
+            <div class="feature">
+              <h3>🎯 Multiple Exchanges</h3>
+              <p>Binance, Coinbase, Kraken, Bybit. Trade everywhere at once.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing Page -->
+    <div class="page" id="pricing">
+      <div class="pricing-page">
+        <h1>Simple, Transparent Pricing</h1>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <h3>Free</h3>
+            <div class="price">$0</div>
+            <div class="price-desc">7-day trial</div>
+            <ul>
+              <li>1 exchange connection</li>
+              <li>Basic grid bot</li>
+              <li>Email support</li>
+              <li>Manual trades only</li>
+            </ul>
+            <button class="btn">Get Started</button>
+          </div>
+
+          <div class="price-card featured">
+            <h3>Pro</h3>
+            <div class="price">$29</div>
+            <div class="price-desc">/month</div>
+            <ul>
+              <li>4 exchange connections</li>
+              <li>Advanced grid bots</li>
+              <li>24/7 AI automation</li>
+              <li>Priority support</li>
+              <li>Performance analytics</li>
+            </ul>
+            <button class="btn">Subscribe</button>
+          </div>
+
+          <div class="price-card">
+            <h3>Enterprise</h3>
+            <div class="price">$299</div>
+            <div class="price-desc">/month</div>
+            <ul>
+              <li>Unlimited exchanges</li>
+              <li>Custom bot strategies</li>
+              <li>Dedicated account manager</li>
+              <li>API access</li>
+              <li>White-label option</li>
+            </ul>
+            <button class="btn">Contact Sales</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dash">
+    <div class="dash-header">
+      <div class="dash-logo">🚀 CryptoAuto Admin</div>
+      <button class="logout-btn" onclick="doLogout()">Logout</button>
+    </div>
+
+    <div class="dash-content">
+      <div class="section show" id="port">
+        <h2>📊 Portfolio</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">$12,450</div>
+            <div class="stat-label">Total Balance</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">65%</div>
+            <div class="stat-label">Win Rate</div>
+          </div>
+        </div>
+        <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
+          <h3 style="margin-bottom: 10px;">Active Bots: 4</h3>
+          <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-top: 10px;">Binance • Coinbase • Kraken • Bybit</p>
+        </div>
+      </div>
+
+      <div class="section" id="trades">
+        <h2>💹 Recent Trades</h2>
+        <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
+          <p style="color: rgba(255, 255, 255, 0.6);">No recent trades yet.</p>
+        </div>
+      </div>
+
+      <div class="section" id="settings">
+        <h2>⚙️ Settings</h2>
+        <div class="settings-box">
+          <h3>🔐 Change Password</h3>
+          <div id="pwdMsg"></div>
+          <input class="input-pwd" type="password" id="curPwd" placeholder="Current password">
+          <input class="input-pwd" type="password" id="newPwd" placeholder="New password">
+          <input class="input-pwd" type="password" id="conPwd" placeholder="Confirm password">
+          <button class="btn-save" onclick="changePwd()">Update Password</button>
+        </div>
+      </div>
+
+      <div class="section" id="users">
+        <h2>👥 Users</h2>
+        <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 20px;">
+          <p style="color: rgba(255, 255, 255, 0.6);">Coming soon</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-nav">
+      <button class="dash-nav-btn active" onclick="dashTab('port')"><div style="font-size: 24px; margin-bottom: 2px;">📊</div>Portfolio</button>
+      <button class="dash-nav-btn" onclick="dashTab('trades')"><div style="font-size: 24px; margin-bottom: 2px;">💹</div>Trades</button>
+      <button class="dash-nav-btn" onclick="dashTab('settings')"><div style="font-size: 24px; margin-bottom: 2px;">⚙️</div>Settings</button>
+      <button class="dash-nav-btn" onclick="dashTab('users')"><div style="font-size: 24px; margin-bottom: 2px;">👥</div>Users</button>
+    </div>
+  </div>
+
+  <script>
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(page).classList.add('active');
+    }
+
+    function showLogin() {
+      document.getElementById('mainApp').style.display = 'none';
+      document.getElementById('login').classList.add('active');
+    }
+
+    function doLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      if (email === 'admin@example.com' && password === 'password') {
+        localStorage.setItem('authToken', 'demo-' + Date.now());
+        document.getElementById('login').classList.remove('active');
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('dash').classList.add('active');
+      } else {
+        document.getElementById('loginErr').innerHTML = '<div class="error">Invalid credentials</div>';
+      }
+    }
+
+    function doLogout() {
+      localStorage.removeItem('authToken');
+      document.getElementById('login').classList.remove('active');
+      document.getElementById('dash').classList.remove('active');
+      document.getElementById('mainApp').style.display = 'block';
+      document.getElementById('email').value = 'admin@example.com';
+      document.getElementById('password').value = '';
+      showPage('landing');
+    }
+
+    function dashTab(tab) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.dash-nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tab).classList.add('show');
+      event.target.closest('.dash-nav-btn').classList.add('active');
+    }
+
+    function changePwd() {
+      const cur = document.getElementById('curPwd').value;
+      const newP = document.getElementById('newPwd').value;
+      const con = document.getElementById('conPwd').value;
+      const msg = document.getElementById('pwdMsg');
+
+      if (!cur || !newP || !con) {
+        msg.innerHTML = '<div class="error-msg">All fields required</div>';
+        return;
+      }
+      if (newP !== con) {
+        msg.innerHTML = '<div class="error-msg">Passwords do not match</div>';
+        return;
+      }
+      if (cur === 'password') {
+        msg.innerHTML = '<div class="success">Password updated!</div>';
+        document.getElementById('curPwd').value = '';
+        document.getElementById('newPwd').value = '';
+        document.getElementById('conPwd').value = '';
+      } else {
+        msg.innerHTML = '<div class="error-msg">Current password incorrect</div>';
+      }
+    }
+
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('authToken')) {
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('dash').classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
