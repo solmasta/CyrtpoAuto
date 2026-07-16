@@ -310,4 +310,299 @@ function getHTML(pathname) {
 
         <div class="section" id="exchanges">
           <h2>Exchange Connections</h2>
-          
+          <button class="btn-submit" style="width: auto; margin-bottom: 20px;" onclick="alert('Add exchange coming soon')">Add Exchange</button>
+          <div class="card">
+            <h3>Binance</h3>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>API Key (masked)</label>
+              <input type="text" value="****...a7f2" disabled>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>Status</label>
+              <input type="text" value="Connected - Active" disabled>
+            </div>
+            <button class="btn-submit" style="width: auto; background: #ef4444; margin-top: 10px;" onclick="alert('Disconnect coming soon')">Disconnect</button>
+          </div>
+        </div>
+
+        <div class="section" id="profile">
+          <h2>Profile</h2>
+          <div class="card">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="profileName" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label>Company</label>
+              <input type="text" id="profileCompany" placeholder="Your Company">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" id="profilePhone" placeholder="+1 (555) 000-0000">
+            </div>
+            <button class="btn-submit" onclick="saveProfile()">Save Profile</button>
+          </div>
+        </div>
+
+        <div class="section" id="account">
+          <h2>Account Settings</h2>
+          <div class="card">
+            <h3>Change Password</h3>
+            <div id="pwdMsg"></div>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input class="form-group" type="password" id="currentPassword">
+            </div>
+            <div class="form-group">
+              <label>New Password (min 8 chars, uppercase, number, symbol)</label>
+              <input class="form-group" type="password" id="newPassword">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input class="form-group" type="password" id="confirmPassword">
+            </div>
+            <button class="btn-submit" onclick="changePassword()">Update Password</button>
+          </div>
+          <div class="card">
+            <h3>Email Address</h3>
+            <div class="form-group">
+              <label>Current Email</label>
+              <input type="email" id="currentEmail" disabled>
+            </div>
+            <div class="form-group">
+              <label>New Email</label>
+              <input type="email" id="newEmail">
+            </div>
+            <button class="btn-submit" onclick="updateEmail()">Update Email</button>
+          </div>
+          <div class="card">
+            <h3>Two-Factor Authentication</h3>
+            <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.7);">Enable 2FA for enhanced security</p>
+            <button class="btn-submit" onclick="alert('2FA coming soon')">Enable 2FA</button>
+          </div>
+          <div class="card">
+            <h3>Login Activity</h3>
+            <table class="table">
+              <tr><th>Date</th><th>Time</th><th>IP Address</th><th>Device</th></tr>
+              <tr><td>Today</td><td>12:34 PM</td><td>192.168.1.1</td><td>Chrome on Mac</td></tr>
+              <tr><td>Yesterday</td><td>8:45 AM</td><td>192.168.1.2</td><td>Safari on iPhone</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="section" id="billing">
+          <h2>Billing & Subscription</h2>
+          <div class="card">
+            <h3>Current Plan</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+              <div><strong>Plan:</strong> Pro</div>
+              <div><strong>Price:</strong> 29 dollars per month</div>
+              <div><strong>Status:</strong> Active</div>
+              <div><strong>Renewal:</strong> August 16, 2026</div>
+            </div>
+            <button class="btn-submit" style="width: auto; margin-right: 10px;" onclick="alert('Upgrade coming soon')">Upgrade Plan</button>
+            <button class="btn-submit" style="width: auto; background: transparent; color: #10b981; border: 1px solid #10b981;" onclick="alert('Downgrade coming soon')">Downgrade Plan</button>
+          </div>
+          <div class="card">
+            <h3>Payment Method</h3>
+            <div class="form-group">
+              <label>Card on File</label>
+              <input type="text" value="Visa ending in 4242" disabled>
+            </div>
+            <button class="btn-submit" style="width: auto;" onclick="alert('Update payment coming soon')">Update Payment Method</button>
+          </div>
+          <div class="card">
+            <h3>Invoice History</h3>
+            <table class="table">
+              <tr><th>Date</th><th>Amount</th><th>Status</th><th>Action</th></tr>
+              <tr><td>July 16, 2026</td><td>29 dollars</td><td>Paid</td><td><a href="#" style="color: #10b981;">Download</a></td></tr>
+              <tr><td>June 16, 2026</td><td>29 dollars</td><td>Paid</td><td><a href="#" style="color: #10b981;">Download</a></td></tr>
+              <tr><td>May 16, 2026</td><td>0 dollars</td><td>Free Trial</td><td>N/A</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="section" id="admin">
+          <h2>Admin Panel</h2>
+          <div class="card">
+            <h3>Users</h3>
+            <table class="table">
+              <tr><th>Email</th><th>Plan</th><th>Joined</th><th>Status</th><th>Action</th></tr>
+              <tr><td>user1@example.com</td><td>Pro</td><td>June 1</td><td>Active</td><td><button onclick="alert('Message coming soon')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Message</button></td></tr>
+              <tr><td>user2@example.com</td><td>Free</td><td>July 5</td><td>Active</td><td><button onclick="alert('Message coming soon')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Message</button></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Send Notification</h3>
+            <div class="form-group">
+              <label>Select User</label>
+              <select>
+                <option>All Users</option>
+                <option>user1@example.com</option>
+                <option>user2@example.com</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <input type="text" placeholder="Your message...">
+            </div>
+            <button class="btn-submit" onclick="alert('Notification sent coming soon')">Send Notification</button>
+          </div>
+          <div class="card">
+            <h3>Revenue</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div><div style="font-size: 28px; color: #10b981; font-weight: 700;">1,234 dollars</div><div style="color: rgba(255, 255, 255, 0.6);">This Month</div></div>
+              <div><div style="font-size: 28px; color: #10b981; font-weight: 700;">12</div><div style="color: rgba(255, 255, 255, 0.6);">Active Users</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="live-indicator">
+    <div class="live-dot"></div>
+    <div class="live-text">LIVE</div>
+  </div>
+
+  <script>
+    const users = {
+      'admin@example.com': { password: 'Admin123!', isAdmin: true, name: 'Admin', email: 'admin@example.com', plan: 'Enterprise' },
+      'user@example.com': { password: 'User123!', isAdmin: false, name: 'John Doe', email: 'user@example.com', plan: 'Pro' }
+    };
+
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(page).classList.add('active');
+    }
+
+    function goHome() { location.href = '/'; }
+    function goToSignup() { showPage('signup'); document.getElementById('mainApp').style.display = 'block'; document.getElementById('dashContainer').style.display = 'none'; }
+    function showLogin() { document.getElementById('loginModal').classList.add('active'); }
+
+    function doLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (users[email] && users[email].password === password) {
+        localStorage.setItem('authToken', btoa(email + ':' + Date.now()));
+        localStorage.setItem('userEmail', email);
+        document.getElementById('loginModal').classList.remove('active');
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('dashContainer').classList.add('active');
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('currentEmail').value = email;
+        
+        if (users[email].isAdmin) {
+          document.getElementById('adminLink').style.display = 'block';
+        }
+      } else {
+        document.getElementById('loginErr').innerHTML = '<div class="error-msg">Invalid credentials</div>';
+      }
+      return false;
+    }
+
+    function doSignup() {
+      const email = document.getElementById('signupEmail').value;
+      const pwd = document.getElementById('signupPassword').value;
+      const pwdConfirm = document.getElementById('signupPasswordConfirm').value;
+      const err = document.getElementById('signupErr');
+
+      if (!email || !pwd || !pwdConfirm) {
+        err.innerHTML = '<div class="error-msg">All fields required</div>';
+        return false;
+      }
+      if (pwd.length < 8 || !/[A-Z]/.test(pwd) || !/[0-9]/.test(pwd) || !/[!@#\$%\^&\*]/.test(pwd)) {
+        err.innerHTML = '<div class="error-msg">Password must have 8+ chars, uppercase, number, symbol</div>';
+        return false;
+      }
+      if (pwd !== pwdConfirm) {
+        err.innerHTML = '<div class="error-msg">Passwords do not match</div>';
+        return false;
+      }
+      if (users[email]) {
+        err.innerHTML = '<div class="error-msg">Email already exists</div>';
+        return false;
+      }
+
+      users[email] = { password: pwd, isAdmin: false, name: '', email: email, plan: 'Free' };
+      err.innerHTML = '<div class="success-msg">Account created! Login with your credentials.</div>';
+      setTimeout(() => { showLogin(); document.getElementById('loginEmail').value = email; document.getElementById('signupEmail').value = ''; document.getElementById('signupPassword').value = ''; document.getElementById('signupPasswordConfirm').value = ''; }, 1500);
+      return false;
+    }
+
+    function doLogout() {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userEmail');
+      document.getElementById('dashContainer').classList.remove('active');
+      document.getElementById('mainApp').style.display = 'block';
+      showPage('landing');
+    }
+
+    function switchSection(section) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('show'));
+      document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+      document.getElementById(section).classList.add('show');
+      event.target.classList.add('active');
+    }
+
+    function changePassword() {
+      const cur = document.getElementById('currentPassword').value;
+      const newP = document.getElementById('newPassword').value;
+      const con = document.getElementById('confirmPassword').value;
+      const msg = document.getElementById('pwdMsg');
+      const email = localStorage.getItem('userEmail');
+
+      if (!cur || !newP || !con) { msg.innerHTML = '<div class="error-msg">All fields required</div>'; return false; }
+      if (users[email].password !== cur) { msg.innerHTML = '<div class="error-msg">Current password incorrect</div>'; return false; }
+      if (newP.length < 8 || !/[A-Z]/.test(newP) || !/[0-9]/.test(newP) || !/[!@#\$%\^&\*]/.test(newP)) {
+        msg.innerHTML = '<div class="error-msg">New password must have 8+ chars, uppercase, number, symbol</div>';
+        return false;
+      }
+      if (newP !== con) { msg.innerHTML = '<div class="error-msg">Passwords do not match</div>'; return false; }
+
+      users[email].password = newP;
+      msg.innerHTML = '<div class="success-msg">Password updated!</div>';
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      return false;
+    }
+
+    function updateEmail() {
+      const newEmail = document.getElementById('newEmail').value;
+      const email = localStorage.getItem('userEmail');
+      if (!newEmail) { alert('Enter new email'); return; }
+      users[newEmail] = users[email];
+      users[newEmail].email = newEmail;
+      delete users[email];
+      localStorage.setItem('userEmail', newEmail);
+      document.getElementById('userEmail').textContent = newEmail;
+      document.getElementById('currentEmail').value = newEmail;
+      document.getElementById('newEmail').value = '';
+      alert('Email updated!');
+    }
+
+    function saveProfile() {
+      const email = localStorage.getItem('userEmail');
+      users[email].name = document.getElementById('profileName').value;
+      users[email].company = document.getElementById('profileCompany').value;
+      alert('Profile saved!');
+    }
+
+    window.addEventListener('load', () => {
+      if (localStorage.getItem('authToken')) {
+        const email = localStorage.getItem('userEmail');
+        document.getElementById('mainApp').style.display = 'none';
+        document.getElementById('dashContainer').classList.add('active');
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('currentEmail').value = email;
+        if (users[email] && users[email].isAdmin) {
+          document.getElementById('adminLink').style.display = 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>`;
+}
